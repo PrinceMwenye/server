@@ -6,7 +6,6 @@ const port = process.env.PORT || 3000; // You can set a custom port or use 3000
 const cors = require('cors');
 app.use(bodyParser.json());
 
-app.use('/api/v1/definition', definitionsRoute);
 // Configure CORS to allow requests from 'http://localhost:3001'
 app.use(cors({
     origin: 'http://localhost:3001', // Change to match the origin of your front-end
@@ -14,8 +13,8 @@ app.use(cors({
     credentials: true, // You can include this if needed
 }));
 
-// Serve static files from the 'public' directory
-app.use(express.static('public'));
+
+app.use('/api/v1/definition', definitionsRoute);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
