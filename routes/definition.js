@@ -1,18 +1,23 @@
 // server2/routes/definitions.js
 const express = require('express');
 const router = express.Router();
+const db_words = require('../database/db_words');
+
 
 // Import database functions and error handling logic here
 
-router.post('/', (req, res) => {
-    console.log("Lets add")
-    // Access the word from the request body
+router.post('/', async (req, res) => {
+    console.log(req.body)
     const word = req.body.word;
-
-    // Handle POST request to create a new dictionary entry
+    // TODO: Check if word already exists
+    const definition = req.body.definition;
+    const language = req.body.wordLanguage;
+    const language_id = await db_words.getLanguageId(language)
+    console.log(language_id)
+    const insertWord = await db_words.insertWord({word:word, definition:definition, language_id:language_id})
     // Implement validation, insertion, and error handling here
 
-    console.log("Adding definition for word:", word);
+    // console.log("Adding definition for word:", word);
 });
 
 router.patch('/:word', (req, res) => {

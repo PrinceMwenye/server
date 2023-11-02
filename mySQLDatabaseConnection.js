@@ -1,5 +1,4 @@
 const mysql = require("mysql2/promise");
-
 const dbConfig = {
   host: process.env.MYSQL_HOST,
   port: process.env.MYSQL_PORT,
