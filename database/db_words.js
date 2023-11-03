@@ -92,9 +92,41 @@ const getDefinition = async (word) => {
   }
 };
 
+
+const updateDefinition = async (postData) => {
+  const wordSQL = `
+    UPDATE entry
+    SET definition = :newDefinition
+    WHERE word = :word;
+  `;
+
+  const param = {
+    word: postData.word,
+    newDefinition: postData.newDefinition,
+  };
+
+  try {
+    const result = await database.query(wordSQL, param);
+
+    if (result.affectedRows > 0) {
+      console.log("Update success")
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log("Error failed to update");
+    console.log(err);
+    return false; 
+  }
+};
+
+
+
 module.exports = {
   insertWord,
   getLanguageId,
   checkWordExists,
-  getDefinition
+  getDefinition,
+  updateDefinition
 };

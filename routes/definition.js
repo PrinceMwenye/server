@@ -1,13 +1,10 @@
-// server2/routes/definitions.js
+
 const express = require('express');
 const router = express.Router();
 const db_words = require('../database/db_words');
 
 
-// Import database functions and error handling logic here
-
 router.post('/', async (req, res) => {
-    console.log(req.body)
     const word = req.body.word;
     const wordExists = await db_words.checkWordExists(word)
     if (wordExists) {
@@ -26,10 +23,28 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.patch('/:word', (req, res) => {
-    // Handle PATCH request to update the definition of an existing word
-    // Implement validation, update, and error handling here
-});
+router.patch('/:word', async (req, res) => {
+    try {
+      const word = req.params.word; 
+      const definition = req.body.definition;
+  
+      if (!definition) {
+        return res.status(400).json({ error: 'Definition is required.' });
+      }
+  
+    
+      await db_words.updateDefinition({
+        word: word,
+        newDefinition: definition
+      });
+  
+      res.status(200).json({ message: 'Definition updated successfully.' });
+    } catch (error) {
+      console.error('Error updating definition:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
 
 router.get('/:word', async (req, res) => {
     const word = req.params.word;
