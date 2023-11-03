@@ -48,7 +48,53 @@ const getLanguageId = async (language) => {
 };
 
 
+const checkWordExists = async (word) => {
+
+  const wordSQL = `
+    SELECT word FROM entry
+    WHERE word = :word
+
+    `;
+
+  const param = {
+    word: word,
+
+  };
+  try {
+    const results = await database.query(wordSQL, param);
+    return results[0].length > 0;
+  } catch (err) {
+    console.log("Error failed to retrieve word id");
+    console.log(err);
+    return;
+  }
+};
+
+const getDefinition = async (word) => {
+
+  const wordSQL = `
+    SELECT definition FROM entry
+    WHERE word = :word
+
+    `;
+
+  const param = {
+    word: word,
+
+  };
+  try {
+    const results = await database.query(wordSQL, param);
+    return results[0][0].definition;
+  } catch (err) {
+    console.log("Error failed to retrieve word id");
+    console.log(err);
+    return;
+  }
+};
+
 module.exports = {
   insertWord,
-  getLanguageId
+  getLanguageId,
+  checkWordExists,
+  getDefinition
 };
