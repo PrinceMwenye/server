@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const db_words = require('../database/db_words');
@@ -25,26 +24,32 @@ router.post('/', async (req, res) => {
 
 router.patch('/:word', async (req, res) => {
     try {
-      const word = req.params.word; 
-      const definition = req.body.definition;
-  
-      if (!definition) {
-        return res.status(400).json({ error: 'Definition is required.' });
-      }
-  
-    
-      await db_words.updateDefinition({
-        word: word,
-        newDefinition: definition
-      });
-  
-      res.status(200).json({ message: 'Definition updated successfully.' });
+        const word = req.params.word;
+        const definition = req.body.definition;
+
+        if (!definition) {
+            return res.status(400).json({
+                error: 'Definition is required.'
+            });
+        }
+
+
+        await db_words.updateDefinition({
+            word: word,
+            newDefinition: definition
+        });
+
+        res.status(200).json({
+            message: 'Definition updated successfully.'
+        });
     } catch (error) {
-      console.error('Error updating definition:', error);
-      res.status(500).json({ error: 'Internal server error' });
+        console.error('Error updating definition:', error);
+        res.status(500).json({
+            error: 'Internal server error'
+        });
     }
-  });
-  
+});
+
 
 router.get('/:word', async (req, res) => {
     const word = req.params.word;
@@ -71,14 +76,46 @@ router.get('/:word', async (req, res) => {
 
 });
 
-router.delete('/:word', (req, res) => {
-    // Handle DELETE request to remove a word and its definition
-    // Implement database deletion, error handling, and response here
+router.delete('/:word', async (req, res) => {
+    const wordToDelete = req.params.word;
+    try {
+        const deletionResult = await db_words.deleteWord(wordToDelete);
+
+        if (deletionResult) {
+            res.status(204).json({
+                message: 'Word deleted successfully'
+            });
+        } else {
+            res.status(404).json({
+                message: 'Word not found'
+            });
+        }
+    } catch (error) {
+        console.error('Error deleting word:', error);
+        res.status(500).json({
+            error: 'Internal server error'
+        });
+    }
 });
 
-router.get('/languages', (req, res) => {
-    // Handle GET request to retrieve the list of languages
-    // Implement querying the 'language' table, error handling, and response here
-});
+router.get('/languages', async (req, res) => {
+    try {
+        const languages = await db_words.getLanguages();
 
+        if (languages) {
+            res.status(200).json({
+                languages
+            });
+        } else {
+            res.status(500).json({
+                error: 'Internal server error'
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching languages:', error);
+        res.status(500).json({
+            error: 'Internal server error'
+        });
+    }
+});
 module.exports = router;

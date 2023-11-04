@@ -117,16 +117,63 @@ const updateDefinition = async (postData) => {
   } catch (err) {
     console.log("Error failed to update");
     console.log(err);
-    return false; 
+    return false;
   }
 };
 
 
+const deleteWord = async (word) => {
+  const deleteSQL = `
+    DELETE FROM entry
+    WHERE word = :word;
+  `;
+
+  const param = {
+    word: word,
+
+  };
+
+  try {
+    const result = await database.query(deleteSQL, param);
+
+    if (result.affectedRows > 0) {
+      console.log("Delete success")
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log("Error failed to update");
+    console.log(err);
+    return false;
+  }
+};
+
+
+const getLanguages = async () => {
+  const languageSQL = `
+    SELECT DISTINCT(language)
+    FROM langague
+  `;
+
+
+  try {
+    const results = await database.query(languageSQL);
+    return results[0][0].language;
+
+  } catch (err) {
+    console.log("Error failed to update");
+    console.log(err);
+    return false;
+  }
+};
 
 module.exports = {
   insertWord,
   getLanguageId,
   checkWordExists,
   getDefinition,
-  updateDefinition
+  updateDefinition,
+  deleteWord,
+  getLanguages
 };
