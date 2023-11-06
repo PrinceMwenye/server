@@ -5,6 +5,7 @@ const db_words = require('../database/db_words');
 
 
 router.post('/', async (req, res) => {
+    console.log("inside get")
     const word = req.body.word;
     const wordExists = await db_words.checkWordExists(word)
     if (wordExists) {
