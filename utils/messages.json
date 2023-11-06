@@ -1,0 +1,23 @@
+{
+  "ERROR_DEFINITION_REQUIRED": "Definition is required.",
+  "ERROR_INTERNAL_SERVER": "Internal server error",
+  "ERROR_UPDATING_DEFINITION": "Error updating definition:",
+  "ERROR_WORD_NOT_FOUND": "Word not found",
+  "ERROR_DELETING_WORD": "Error deleting word:",
+  "ERROR_FETCHING_LANGUAGES": "Error fetching languages:",
+  "MESSAGE_DEFINITION_UPDATED_SUCCESSFULLY": "Definition updated successfully.",
+  "LOG_WORD_ALREADY_EXISTS": "Word already exists.",
+  "LOG_ADDED_DEFINITION_FOR_WORD": "Added definition for word:",
+  "LOG_INSIDE_GET": "inside GET",
+  "MESSAGE_WORD_NOT_FOUND_IN_DICTIONARY": "Word not found in the dictionary.",
+  "ERROR_FAILED_UPDATE": "Error failed to update",
+  "ERROR_INSERT_WORD": "Error failed to insert word",
+  "ERROR_RETRIEVE_WORD_ID": "Error failed to retrieve word id",
+  "ERROR_RETRIEVE_DEFINITION": "Error failed to retrieve definition",
+  "ERROR_UPDATE_DEFINITION": "Error failed to update definition",
+  "ERROR_DELETE_WORD": "Error deleting word",
+  "SUCCESS_UPDATE_DEFINITION": "Update success",
+  "LOG_DELETE_RESULT": "Delete operation result:",
+  "LOG_RAW_RESULTS": "Raw results:",
+  "NO_RESULTS_FOUND_OR_UNEXPECTED_STRUCTURE": "No results found or unexpected structure:"
+}

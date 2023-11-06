@@ -1,5 +1,7 @@
 const database = require("../mySQLDatabaseConnection.js");
 
+const messages = require('./utils/messages.json');
+
 
 const insertWord = async (postData) => {
   console.log(postData)
@@ -18,7 +20,7 @@ const insertWord = async (postData) => {
     const results = await database.query(wordSQL, param);
     return results[0][0];
   } catch (err) {
-    console.log("Error failed to insert word");
+    console.log(messages.ERROR_INSERT_WORD);
     console.log(err);
     return;
   }
@@ -41,7 +43,7 @@ const getLanguageId = async (language) => {
     const results = await database.query(wordSQL, param);
     return results[0][0].language_id;
   } catch (err) {
-    console.log("Error failed to retrieve word id");
+    console.log(messages.ERROR_RETRIEVE_WORD_ID);
     console.log(err);
     return;
   }
@@ -64,7 +66,7 @@ const checkWordExists = async (word) => {
     const results = await database.query(wordSQL, param);
     return results[0].length > 0;
   } catch (err) {
-    console.log("Error failed to retrieve word id");
+    console.log(messages.ERROR_RETRIEVE_WORD_ID);
     console.log(err);
     return;
   }
@@ -83,18 +85,18 @@ const getDefinition = async (word) => {
   try {
     const results = await database.query(wordSQL, param);
     // Log the raw results to inspect the structure
-    console.log("Raw results:", results);
+    console.log(messages.LOG_RAW_RESULTS, results);
 
     // Check if the first element of the results array is defined
     if (results[0] && results[0].length > 0) {
       return results[0][0].definition;
     } else {
       // No results found, or the results array is not structured as expected
-      console.log("No results found or unexpected structure:", results);
+      console.log(messages.NO_RESULTS_FOUND_OR_UNEXPECTED_STRUCTURE, results);
       return null;
     }
   } catch (err) {
-    console.log("Error failed to retrieve definition");
+    console.log(messages.ERROR_RETRIEVE_DEFINITION);
     console.log(err);
     return null;
   }
@@ -118,13 +120,13 @@ const updateDefinition = async (postData) => {
     const result = await database.query(wordSQL, param);
 
     if (result.affectedRows > 0) {
-      console.log("Update success")
+      console.log(messages.SUCCESS_UPDATE_DEFINITION)
       return true;
     } else {
       return false;
     }
   } catch (err) {
-    console.log("Error failed to update");
+    console.log(messages.ERROR_FAILED_UPDATE);
     console.log(err);
     return false;
   }
@@ -136,7 +138,7 @@ const deleteWord = async (word) => {
 
   try {
     const result = await database.query(deleteSQL, param);
-    console.log("Delete operation result:", result); // Log the full result to inspect its structure
+    console.log(messages.LOG_DELETE_RESULT, result); // Log the full result to inspect its structure
 
     // Assuming result is an array with the query result at the first position
     if (result && result[0] && result[0].affectedRows > 0) {
@@ -145,7 +147,7 @@ const deleteWord = async (word) => {
       return false;
     }
   } catch (err) {
-    console.error("Error deleting word:", err);
+    console.error(messages.ERROR_DELETE_WORD, err);
     throw err; // Throw the error to be caught by the router
   }
 };
@@ -165,7 +167,7 @@ const getLanguages = async () => {
     return results[0][0].language;
 
   } catch (err) {
-    console.log("Error failed to update");
+    console.log(messages.ERROR_FAILED_UPDATE);
     console.log(err);
     return false;
   }

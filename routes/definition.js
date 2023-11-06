@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db_words = require('../database/db_words');
+const messages = require('./utils/messages.json');
 
 
 
@@ -8,7 +9,7 @@ router.post('/', async (req, res) => {
     const word = req.body.word;
     const wordExists = await db_words.checkWordExists(word)
     if (wordExists) {
-        console.log("Word already exists.")
+        console.log(messages.LOG_WORD_ALREADY_EXISTS)
     } else {
         const definition = req.body.definition;
         const language = req.body.wordLanguage;
@@ -19,7 +20,7 @@ router.post('/', async (req, res) => {
             definition: definition,
             language_id: language_id
         })
-        console.log("Added definition for word:", word);
+        console.log(messages.LOG_ADDED_DEFINITION_FOR_WORD, word);
     }
 });
 
@@ -30,7 +31,7 @@ router.patch('/:word', async (req, res) => {
 
         if (!definition) {
             return res.status(400).json({
-                error: 'Definition is required.'
+                error: ERROR_DEmessages.ERROR_DEFINITION_REQUIREDFINITION_REQUIRED
             });
         }
 
@@ -41,12 +42,12 @@ router.patch('/:word', async (req, res) => {
         });
 
         res.status(200).json({
-            message: 'Definition updated successfully.'
+            message: messages.MESSAGE_DEFINITION_UPDATED_SUCCESSFULLY
         });
     } catch (error) {
-        console.error('Error updating definition:', error);
+        console.error(messages.ERROR_UPDATING_DEFINITION, error);
         res.status(500).json({
-            error: 'Internal server error'
+            error: messages.ERROR_INTERNAL_SERVER
         });
     }
 });
@@ -54,7 +55,7 @@ router.patch('/:word', async (req, res) => {
 
 router.get('/:word', async (req, res) => {
     const word = req.params.word;
-    console.log("inside GET")
+    console.log(messages.LOG_INSIDE_GET)
     try {
         const definition = await db_words.getDefinition(word);
 
@@ -65,13 +66,13 @@ router.get('/:word', async (req, res) => {
             });
         } else {
             res.status(404).json({
-                message: 'Word not found'
+                message: messages.ERROR_WORD_NOT_FOUND 
             });
         }
     } catch (err) {
         console.error(err);
         res.status(500).json({
-            message: 'Internal Server Error'
+            message: messages.ERROR_INTERNAL_SERVER
         });
     }
 
@@ -90,9 +91,9 @@ router.delete('/:word', async (req, res) => {
           });
       }
   } catch (error) {
-      console.error('Error deleting word:', error);
+      console.error(messages.ERROR_DELETING_WORD, error);
       res.status(500).json({
-          error: 'Internal server error'
+          error: messages.ERROR_INTERNAL_SERVER
       });
   }
 });
@@ -109,13 +110,13 @@ router.get('/languages', async (req, res) => {
             });
         } else {
             res.status(500).json({
-                error: 'Internal server error'
+                error: messages.ERROR_INTERNAL_SERVER
             });
         }
     } catch (error) {
-        console.error('Error fetching languages:', error);
+        console.error(messages.ERROR_FETCHING_LANGUAGES, error);
         res.status(500).json({
-            error: 'Internal server error'
+            error: messages.ERROR_INTERNAL_SERVER
         });
     }
 });
