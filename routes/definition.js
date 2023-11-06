@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db_words = require('../database/db_words');
-const messages = require('./utils/messages.json');
+
+const messages = require('../utils/messages.json');
+
+
 
 
 
@@ -32,7 +35,7 @@ router.patch('/:word', async (req, res) => {
 
         if (!definition) {
             return res.status(400).json({
-                error: ERROR_DEmessages.ERROR_DEFINITION_REQUIREDFINITION_REQUIRED
+                error: messages.ERROR_DEFINITION_REQUIREDFINITION_REQUIRED
             });
         }
 
