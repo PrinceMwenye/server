@@ -3,6 +3,7 @@ const router = express.Router();
 const db_words = require('../database/db_words');
 
 
+
 router.post('/', async (req, res) => {
     const word = req.body.word;
     const wordExists = await db_words.checkWordExists(word)
@@ -77,26 +78,26 @@ router.get('/:word', async (req, res) => {
 });
 
 router.delete('/:word', async (req, res) => {
-    const wordToDelete = req.params.word;
-    try {
-        const deletionResult = await db_words.deleteWord(wordToDelete);
+  const wordToDelete = req.params.word;
+  try {
+      const deletionResult = await db_words.deleteWord(wordToDelete);
 
-        if (deletionResult) {
-            res.status(204).json({
-                message: 'Word deleted successfully'
-            });
-        } else {
-            res.status(404).json({
-                message: 'Word not found'
-            });
-        }
-    } catch (error) {
-        console.error('Error deleting word:', error);
-        res.status(500).json({
-            error: 'Internal server error'
-        });
-    }
+      if (deletionResult) {
+          res.status(204).send(); // No content to send back, but successful deletion
+      } else {
+          res.status(404).json({
+              message: `Word '${wordToDelete}' not found in the dictionary.`
+          });
+      }
+  } catch (error) {
+      console.error('Error deleting word:', error);
+      res.status(500).json({
+          error: 'Internal server error'
+      });
+  }
 });
+
+
 
 router.get('/languages', async (req, res) => {
     try {
