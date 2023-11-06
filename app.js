@@ -8,7 +8,7 @@ const cors = require('cors');
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: 'http://localhost:3001',
+    origin: 'https://clientlab6-dd9cafc8770e.herokuapp.com',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, 
 }));

@@ -6,6 +6,7 @@ const messages = require('./utils/messages.json');
 
 
 router.post('/', async (req, res) => {
+    console.log("inside get")
     const word = req.body.word;
     const wordExists = await db_words.checkWordExists(word)
     if (wordExists) {
