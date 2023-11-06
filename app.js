@@ -41,12 +41,12 @@ app.use(cors({
 app.use('/api/v1/definition', definitionsRoute);
 
 // Set the CORS headers for all routes
-app.all('*', (req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://clientlab6-dd9cafc8770e.herokuapp.com");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
-    res.header("Access-Control-Allow-Credentials", true);
-    next();
-});
+// app.all('*', (req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "https://clientlab6-dd9cafc8770e.herokuapp.com");
+//     res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+//     res.header("Access-Control-Allow-Credentials", true);
+//     next();
+// });
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
