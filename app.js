@@ -7,7 +7,6 @@ const port = process.env.PORT || 3000;
 const cors = require('cors');
 app.use(bodyParser.json());
 
-app.use('/api/v1/definition', definitionsRoute);
 
 
 app.use(cors({
@@ -16,6 +15,7 @@ app.use(cors({
     credentials: true,
 }));
 
+app.use('/api/v1/definition', definitionsRoute);
 
 
 app.listen(port, () => {
