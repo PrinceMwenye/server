@@ -34,7 +34,7 @@ app.use(bodyParser.json());
 
 app.use(cors({
     origin: 'https://clientlab6-dd9cafc8770e.herokuapp.com',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS',
+    methods: 'GET,PATCH,POST,DELETE, OPTIONS',
     credentials: true,
 }));
 
