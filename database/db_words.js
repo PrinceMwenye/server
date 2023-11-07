@@ -1,6 +1,6 @@
 const database = require("../mySQLDatabaseConnection.js");
 
-const messages = require('./utils/messages.json');
+const messages = require('../utils/messages.json');
 
 
 const insertWord = async (postData) => {
